@@ -1,0 +1,39 @@
+<FinalScreen>:
+    name: "finalscreen"
+
+    MDFloatLayout:
+        Image:
+            source: "Graphics/background.jpg" 
+            allow_stretch: True
+            keep_ratio: False
+
+        Image:
+            source: "Graphics/Logo.png"
+            size_hint: None, None
+            size: 200, 200
+            pos_hint: {'center_x': 0.14, 'center_y': 0.9}
+
+        MDLabel:
+            text: "Car Price Checker"
+            theme_text_color: "Custom"
+            text_color: 0.149, 0.898, 0.99, 1
+            outline_color: 0, 0, 0, 1
+            outline_width: 2
+            pos_hint: {"center_x": 0.15, "center_y": 0.87}
+            halign: "center"
+            font_name: "TITLE_FONT"
+            font_size: 20
+
+        MDRoundFlatButton:
+            pos_hint: {"right": 0.57, "top": 0.17}
+            size_hint: None, None
+            size: 80, 80
+            on_release: pass
+            md_bg_color: "#458FCC"
+            on_release: root.on_button_click()
+
+            Image:
+                source: "Graphics/back.png"
+                size_hint: None, None
+                size: 110, 110
+                pos_hint: {"center_x": 0.8, "center_y": 0.5}

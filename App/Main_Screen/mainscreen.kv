@@ -1,0 +1,70 @@
+<MainScreen>:
+    name: "mainscreen"
+
+    MDFloatLayout:
+        Image:
+            source: "Graphics/background.jpg" 
+            allow_stretch: True
+            keep_ratio: False
+
+        Image:
+            source: "Graphics/Logo.png"
+            size_hint: None, None
+            size: 400, 400
+            pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
+        MDLabel:
+            text: "Car Price Checker"
+            theme_text_color: "Custom"
+            text_color: 0.149, 0.898, 0.99, 1
+            outline_color: 0, 0, 0, 1
+            outline_width: 2
+            pos_hint: {"center_y": 0.75}
+            halign: "center"
+            font_name: "TITLE_FONT"
+            font_size: 40
+
+        MDLabel:
+            text: "Check The Price Of Your Dream Car"
+            theme_text_color: "Custom"
+            text_color: 0.796, 0.029, 0.441, 0.8
+            outline_color: 0, 0, 0, 1
+            outline_width: 2
+            pos_hint: {"center_y": 0.7}
+            halign: "center"
+            font_name: "TITLE_FONT"
+            font_size: 20
+
+        MDTextField:
+            id: url_input
+            hint_text: "Enter URL here"
+            hint_font: 40
+            size_hint: 0.7, None
+            height: 40
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
+            line_color_focus: 0.796, 0.029, 0.441, 1
+            text_color: 0.796, 0.029, 0.441, 0.8
+            font_size: 20
+            font_name: "TEXT_FONT"
+            mode: "rectangle"
+
+        MDSpinner:
+            id: spinner
+            size_hint: None, None
+            size: dp(80), dp(80)
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
+            active: False  # Spinner starts hidden
+
+        MDRoundFlatButton:
+            pos_hint: {"right": 0.57, "top": 0.25}
+            size_hint: None, None
+            size: 70, 70
+            on_release: pass
+            md_bg_color: "#458FCC"
+            on_release: root.on_button_click()
+
+            Image:
+                source: "Graphics/search.png"
+                size_hint: None, None
+                size: 120, 120
+                pos_hint: {"center_x": 0.8, "center_y": 0.5}
