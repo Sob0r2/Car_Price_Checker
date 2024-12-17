@@ -17,4 +17,5 @@ Thumbs.db
 # env file
 .env
 
-# data folders
+# photos
+.jpg
