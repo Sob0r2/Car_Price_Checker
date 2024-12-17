@@ -173,39 +173,35 @@ def get_only_tabular_data(path: str) -> pd.DataFrame:
     return results
 
 
-def preprocess_tabular_data(tabular_df: pd.DataFrame) -> pd.DataFrame:
-
-    tabular_df = tabular_df.drop(columns=["nr_seats"], errors="ignore")
+def preprocess_tabular_data(tabular_df):
+    tabular_df = tabular_df.drop("nr_seats", axis=1)
+    if "link" in tabular_df.columns:
+        tabular_df = tabular_df.drop("nr_seats", axis=1)
     tabular_df.loc[tabular_df["fuel_type"] == "Elektryczny", "engine displacement"] = 0
 
     door_mapper = {"2": "3", "4": "5"}
-    tabular_df["door_count"] = (
-        tabular_df["door_count"].map(door_mapper).fillna(tabular_df["door_count"])
+    tabular_df["door_count"] = tabular_df["door_count"].apply(
+        lambda x: door_mapper.get(x, x)
     )
-    tabular_df.replace("", np.nan, inplace=True)
-    tabular_df.dropna(inplace=True)
 
-    # Convert columns to appropriate data types
-    tabular_df["price"] = (
-        tabular_df["price"].str.replace(" ", "").str.replace(",", ".").astype(float)
+    tabular_df = tabular_df.replace("", np.nan)
+    tabular_df = tabular_df.dropna()
+
+    tabular_df["price"] = tabular_df["price"].apply(
+        lambda x: float(x.replace(" ", "").replace(",", "."))
     )
-    tabular_df["door_count"] = tabular_df["door_count"].astype(int)
+    tabular_df["door_count"] = tabular_df["door_count"].apply(lambda x: int(x))
     tabular_df["year"] = pd.to_numeric(tabular_df["year"], errors="coerce")
-    tabular_df["mileage"] = (
-        tabular_df["mileage"].str.split(" km").str[0].str.replace(" ", "").astype(int)
+    tabular_df["mileage"] = tabular_df["mileage"].apply(
+        lambda x: int(x.split(" km")[0].replace(" ", ""))
     )
-    tabular_df["engine displacement"] = (
-        tabular_df["engine displacement"]
-        .str.split(" cm3")
-        .str[0]
-        .replace(" ", "")
-        .astype(int)
+    tabular_df["engine displacement"] = tabular_df["engine displacement"].apply(
+        lambda x: int(x.split(" cm3")[0].replace(" ", "")) if x != 0 else 0
     )
-    tabular_df["engine power"] = (
-        tabular_df["engine power"].str.split(" KM").str[0].replace(" ", "").astype(int)
+    tabular_df["engine power"] = tabular_df["engine power"].apply(
+        lambda x: int(x.split(" KM")[0].replace(" ", ""))
     )
 
-    # One-hot encode categorical variables
     tabular_df = pd.get_dummies(
         tabular_df,
         columns=["fuel_type", "transmission", "car_model", "body type", "new_or_use"],
