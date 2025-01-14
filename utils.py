@@ -21,7 +21,7 @@ async def scrap_car_tabular_data(soup):
     for stat in basic_elements:
         div = soup.find("div", {"data-testid": stat})
         if div:
-            ele = div.find("p", class_="eim4snj8 ooa-17xeqrd er34gjf0")
+            ele = div.find("p", class_="eim4snj8 ooa-17xeqrd")
             if ele:
                 # Special handling for "make" to map it to "car_model"
                 if stat == "make":
@@ -45,15 +45,15 @@ async def scrap_car_tabular_data(soup):
     for stat, key in detailed_elements.items():
         div = soup.find("div", {"aria-label": lambda x: x and stat in x})
         if div:
-            car_info[key] = div.find("p", class_="ee3fiwr2 ooa-1rcllto er34gjf0").text
+            car_info[key] = div.find("p", class_="ee3fiwr2 ooa-1rcllto").text
         else:
             car_info[key] = ""
 
     div = soup.find("div", class_="ooa-1821gv5 e12csvfg1")
     if div:
-        car_info["new_or_use"] = div.find(
-            "p", class_="e7ig7db0 ooa-1f1sue8"
-        ).text.split(" ")[0]
+        car_info["new_or_use"] = div.find("p", class_="e7ig7db0 ooa-vy37q4").text.split(
+            " "
+        )[0]
     else:
         car_info["new_or_use"] = ""
 
